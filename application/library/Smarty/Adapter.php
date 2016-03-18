@@ -14,7 +14,7 @@ class Smarty_Adapter extends View {
 
 	protected $_tpl_type = 'Smarty';
 
-	public function __construct($tpl_dir = null, $tpl_config = array()) {
+	public function __construct($tpl_dir = NULL, $tpl_config = array()) {
 
 		parent::__construct($tpl_dir, $tpl_config);
 
@@ -30,7 +30,7 @@ class Smarty_Adapter extends View {
 
 		$this->_view = new Smarty;
 		
-		if ( null !== $tpl_config )
+		if ( NULL !== $tpl_config )
 		{
 			foreach ($tpl_config as $key => $value)
 			{
@@ -42,7 +42,7 @@ class Smarty_Adapter extends View {
 		}
 	}
 
-	public function setScriptPath($tpl_dir = null) {
+	public function setScriptPath($tpl_dir = NULL) {
 
 		parent::setScriptPath($tpl_dir);
 
@@ -61,7 +61,7 @@ class Smarty_Adapter extends View {
 	}
 
 	public function __isset($key) {
-		return ($this->_view->getTemplateVars($key) !== null);
+		return ($this->_view->getTemplateVars($key) !== NULL);
 	}
 
 	public function __unset($key) {
@@ -85,24 +85,35 @@ class Smarty_Adapter extends View {
 		}
 	}
 
-	public function display($tpl_name, $tpl_vars = array(), $tpl_root_dir = null) {
+	public function display($tpl_name = NULL, $tpl_dir = NULL, $tpl_root_dir = NULL) {
 
-		// 根目录
-		if ( null === $tpl_root_dir )
+		if ( NULL === $tpl_root_dir )
+		{
 			$tpl_root_dir = $this->setScriptPath()->getScriptPath();
+		}
 		
-		if ( false === strpos($tpl_name, '/') )
-			$tpl_name = strtolower(Dispatcher::getInstance()->getRequest()->controller) . DIRECTORY_SEPARATOR . $tpl_name;
+		if ( NULL === $tpl_name || NULL === $tpl_dir )
+		{
+			$request = Dispatcher::getInstance()->getRequest();
 
-		if ( ! empty($tpl_vars) )
-			$this->assign($tpl_vars);
+			if ( NULL === $tpl_dir )
+			{
+				$tpl_dir = strtolower($request->controller);
 
-		$tpl_name = $tpl_root_dir . DIRECTORY_SEPARATOR . $tpl_name . '.html';
-		
+			}
+
+			if ( NULL === $tpl_name )
+			{
+				$tpl_name = strtolower($request->action);
+			}
+		}
+
+		$tpl_name = $tpl_root_dir . DS . $tpl_dir . DS . 'views' . DS . $tpl_name . '.html';
+
 		echo $this->_view->display($tpl_name);
 	}
 
-	public function assign($spec, $value = null) {
+	public function assign($spec, $value = NULL) {
 
 		if (is_array($spec))
 		{
@@ -115,13 +126,13 @@ class Smarty_Adapter extends View {
 		return $this;
 	}
 
-	public function render($file_name, $tpl_vars = array(), $tpl_root_dir = null) {
+	public function render($file_name, $tpl_vars = array(), $tpl_root_dir = NULL) {
 		
 		// 根目录
-		if ( null === $tpl_root_dir )
+		if ( NULL === $tpl_root_dir )
 			$tpl_root_dir = $this->setScriptPath()->getScriptPath();
 
-		$file_name = $tpl_root_dir . DIRECTORY_SEPARATOR . $file_name;
+		$file_name = $tpl_root_dir . DS . $file_name;
 
 		if (!empty($tpl_vars))
 		{

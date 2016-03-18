@@ -9,6 +9,8 @@ namespace Widget;
 
 class Upload extends \Widget {
 
+    protected $_auto_render = FALSE;
+
     public function editor($filename = null, $input_name = 'filename', $thumb_width = 200, $thumb_height = 200) {
 
         if ( $filename )
@@ -51,11 +53,7 @@ class Upload extends \Widget {
 
         echo $thumb_height . "\n";
 
-    }
 
-    public function __distruct() {
-
-        echo "Asdf";
     }
 }
 ?>

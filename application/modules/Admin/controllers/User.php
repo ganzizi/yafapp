@@ -22,7 +22,7 @@ class UserController extends AdminController {
 
         Widget::factory('Upload')
             ->args('user', 'jacky')
-            ->exexute(1, 2, 3, 4);
+            ->execute('single', 1, 2, 3, 4);
 
     }
 

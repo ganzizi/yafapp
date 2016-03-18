@@ -9,44 +9,14 @@
  */
 class Widget {
 
-    /**
-     * 实例对象
-     * 
-     * @var array
-     */
-    protected static $_instance = array();
+   protected static $_instance = array();
 
-    /**
-     * 参数
-     * 
-     * @var array
-     */
+    protected $_auto_render = TRUE;
+
     protected $_args = array();
 
-    /**
-     * 自动渲染模板
-     * 
-     * @var boolean
-     */
-    protected $_auto_render = true;
-
-    /**
-     * 模板引用值
-     * 
-     * @var array
-     */
     protected $_assign = array();
     
-    /**
-     * @uses 
-     *     Widget::factory('User')
-     *         ->arg('name'=>'jacky')
-     *         ->arg('type'=>'single')
-     *         ->execute('sync', $arg1, $arg2, $arg3);
-     * 
-     * @param  string $class_name 类名称
-     * @return object
-     */
     public static function factory($class_name) {
 
         if ( ! isset(Widget::$_instance[$class_name]) )
@@ -76,7 +46,6 @@ class Widget {
 
                 $this->_args[$_key] = $_value;
             }
-
         }
         else
         {
@@ -112,23 +81,17 @@ class Widget {
      * @param  string $tpl_dir  模板目录
      * @return void
      */
-    public function display($tpl_file = null, $tpl_dir = null) {
+    public function display($tpl_file, $tpl_dir = null) {
 
-        // 库文件目录
-        $_libary_path = Yaf_Application::app()->getConfig()->application->library;
-
-        // widget 模板根目录
-        $widget_view_path = $_libary_path . DIRECTORY_SEPARATOR . 'Widget' . DIRECTORY_SEPARATOR . 'views';
-
-        if ( null === $tpl_dir )
+        if ( NULL === $tpl_dir )
         {
-            $tpl_dir = ltrim(get_class($this), 'Widget_');
-            $tpl_dir = strtolower(str_replace('_', DIRECTORY_SEPARATOR, $tpl_dir));
+            $tpl_dir = str_replace('\\', DS, strtolower(get_class($this)));
+            $tpl_dir = substr($tpl_dir, strlen(get_class()) + 1);    
         }
+        
+        $tpl_file = $tpl_dir . DS . $tpl_file;
 
-        $tpl_file = $tpl_dir . DIRECTORY_SEPARATOR . $tpl_file;
-
-        View::factory('Smarty', $tpl_dir)->display($tpl_file, $this->_assign, $widget_view_path);
+        Output::factory('Smarty')->display($tpl_file, 'widget');
     }
 
     /**
@@ -153,6 +116,4 @@ class Widget {
         
         $this->_assign = array_merge($this->_assign, $data);
     }
-
-
 }

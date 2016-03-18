@@ -8,7 +8,6 @@
 namespace Output;
 
 use Yaf\View_Interface;
-use Yaf\Exception;
 use Yaf\Dispatcher;
 
 class View implements View_Interface {
@@ -76,21 +75,20 @@ class View implements View_Interface {
      * @param  string  $tpl_dir  模板目录
      * @return object  $this 
      */
-    public function setScriptPath($tpl_dir = null) {
+    public function setScriptPath($tpl_dir = '') {
 
         if ( ! $tpl_dir )
         {
             $request = Dispatcher::getInstance()->getRequest();
 
             if ( $request->module == 'Index' )
+            {
                 $tpl_dir = 'views';
+            }
             else
-                $tpl_dir = 'modules' . DS . $request->module . DS . 'views'; 
-
-        }
-        else
-        {
-            $tpl_dir = substr_replace('/', DS, $tpl_dir);
+            {
+                $tpl_dir = 'modules' . DS . $request->module; 
+            }
         }
 
         if ( is_readable($tpl_dir) )
@@ -99,11 +97,11 @@ class View implements View_Interface {
         }
         else
         {
-            $this->_tpl_dir = $this->_tpl_root_dir . DS . $tpl_dir;
+            $this->_tpl_dir = rtrim($this->_tpl_root_dir . DS . $tpl_dir, DS) ;
 
             if ( ! is_readable($this->_tpl_dir) )
             {
-                throw new Exception('Invalid path provided' . $this->_tpl_dir);
+                throw new \Core_Exception('Invalid path provided ' . $this->_tpl_dir);
             }
         }
 

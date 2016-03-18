@@ -2,7 +2,7 @@
 /**
  * bootstrap 
  *
- * @author jacky<isme.jac@gmail.com>
+ * @author jacky
  * @copyright Copyright (c) 2916 (http://www.elephant.net)
  */
 use Yaf\Bootstrap_Abstract;
