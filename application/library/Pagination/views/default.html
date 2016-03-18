@@ -1,0 +1,17 @@
+{if $page->num_pages > 1}
+<nav class="t-pager">
+    <p class="pager-left"><strong><small> 第 {$page->number} 页，共 {$page->num_pages} 页， 共 {$page->count} 条记录  </small></strong></p>
+
+    <ul class="pagination pagination">
+           <li><a href="{if $page->number == 1}javascript:void(0){else}$page->url($page->previous_page_number()){/if}">«</a></li>
+
+        {foreach $page->current_range() as $key => $number}
+            <li class="{if $page->number==$number}active{/if}"><a  href="{if $page->number == $number}javascript:void(0){else}{$page->url($number)}{/if}">{$number}</a></li>
+        {/foreach}
+
+        <li><a href="{if $page->has_next()}{$page->url($page->next_page_number())}{else}javascript:void(0){/if}">»</a></li>
+
+    </ul>
+</nav>
+{/if}
+

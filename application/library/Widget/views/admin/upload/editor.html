@@ -1,0 +1,19 @@
+<div class="upload_img row form-group">
+    {if $filename}
+    <p>
+        <img style="width:200px" height="200px;" src="{Upload::url($filename)}">
+        <input type="hidden" name="{$input_name}" value="{$filename}">
+        <span style="display: none;"><a href="javascript:void(0)">x</a></span>
+    </p>
+    {/if}
+</div>
+
+<button click id="{$input_name}" class="btn btn-primary btn-sm">选择图片</button>
+
+<script type="text/javascript">
+$("#{$input_name}").upload({
+    name   : '{$name}',
+    width  : '{$thumb_width}px',
+    height : '{$thumb_height}px'
+})
+</script>

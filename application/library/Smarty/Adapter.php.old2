@@ -1,0 +1,166 @@
+<?php
+/*
+ * Smarty instance
+ *
+ * @package    Elephant
+ * @author     Elephant Team
+ * @copyright  (c) 2015-2016 Elephant Team
+ * @license    http://elephant.software/license
+ */
+class Smarty_Adapter implements Yaf_View_Interface {
+
+	protected $_smarty;
+
+    protected $_prerix_directory = true;
+
+	public function __construct( $tpl_path = null, $params = array() ) {
+
+		$current_dir = dirname(__FILE__);
+		Yaf_Loader::import($current_dir . '/Smarty.class.php');
+		Yaf_Loader::import($current_dir . '/sysplugins/smarty_internal_templatecompilerbase.php');
+		Yaf_Loader::import($current_dir . '/sysplugins/smarty_internal_templatelexer.php');
+		Yaf_Loader::import($current_dir . '/sysplugins/smarty_internal_templateparser.php');
+		Yaf_Loader::import($current_dir . '/sysplugins/smarty_internal_compilebase.php');
+		Yaf_Loader::import($current_dir . '/sysplugins/smarty_internal_write_file.php');
+		Yaf_Loader::import($current_dir . '/sysplugins/smarty_internal_compile_block.php');
+		Yaf_Loader::import($current_dir . '/sysplugins/smarty_internal_resource_string.php');
+
+		$this->_smarty = new Smarty;
+
+		if ( $tpl_path !== null )
+		{
+			$this->setScriptPath($tplPath);
+		}
+
+		if ( null !== $params )
+		{
+			foreach ($params as $key => $value)
+			{
+				if ($key == 'plugins_dir')
+					$this->_smarty->$key = array_merge($this->_smarty->$key, array($value));
+				else
+					$this->_smarty->$key = $value;
+			}
+		}
+	}
+
+	public function getEngine() {
+
+		return $this->_smarty;
+	}
+
+    public function setPath($name) {
+
+        // return $name;
+
+        $request = Yaf_Dispatcher::getInstance()->getApplication();
+
+
+
+        return strtolower($request->module) . DS . $name;
+    }
+
+	public function setScriptPath( $path, $prefix_directory = true) {
+
+
+		if ( is_readable($path) )
+		{
+			$this->_smarty->template_dir = $path;
+		}
+		else
+		{
+			throw new Exception('Invalid path provided');
+		}
+
+	}
+
+	public function getScriptPath() {
+
+        foreach ($this->_smarty->template_dir as $key => $value) {
+            return $value;
+
+        }
+		// return $this->_smarty->template_dir;
+	}
+
+	public function __set($key, $val) {
+		$this->_smarty->assign($key, $val);
+	}
+
+	public function __get($key) {
+		return $this->_smarty->getTemplateVars($key);
+	}
+
+	public function __isset($key) {
+		return ($this->_smarty->getTemplateVars($key) !== null);
+	}
+
+	public function __unset($key) {
+		$this->_smarty->clearAssign($key);
+	}
+
+	public function clearVars() {
+		$this->_smarty->clearAllAssign();
+	}
+
+	public function cleanCache($name) {
+		if (!empty($name))
+		{
+			$this->_smarty->clearCache($name);
+			$this->_smarty->clearCompiledTemplate($name);
+		}
+		else
+		{
+			$this->_smarty->clearAllCache();
+			$this->_smarty->clearCompiledTemplate();
+		}
+	}
+
+	public function display($name, $tpl_vars = array()) {
+
+        // echo "display --- ";
+
+		//die(var_dump($name));
+		if (!empty($tpl_vars))
+		{
+			$this->assign($tpl_vars);
+		}
+		echo $this->_smarty->display($name);
+	}
+
+	public function assign($spec, $value = null) {
+		if (is_array($spec))
+		{
+			$this->_smarty->assign($spec);
+
+			return;
+		}
+
+		$this->_smarty->assign($spec, $value);
+	}
+
+	public function render($name, $tpl_vars = array()) {
+
+        // $name = $this->setPath($name);
+        $name = $this->getScriptPath() . $name;
+
+    
+      
+		if (!empty($tpl_vars))
+		{
+			$this->assign($tpl_vars);
+		}
+
+		return $this->_smarty->fetch($name);
+	}
+
+	public function registerFunction($type, $function, $params) {
+		if (!in_array($type, array('function', 'modifier')))
+			return false;
+		$this->_smarty->registerPlugin($type, $function, $params);
+	}
+
+    public function parseDirectory() {
+
+    }
+}
