@@ -6,7 +6,6 @@
  * @copyright Copyright (c) 2016 (http://www.elephant.net)
  */
 namespace Core;
-
 class Controller_Admin extends Controller_Core {
 
 }

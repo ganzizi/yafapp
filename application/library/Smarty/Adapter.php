@@ -92,25 +92,16 @@ class Smarty_Adapter extends View {
 			$tpl_root_dir = $this->setScriptPath()->getScriptPath();
 		}
 		
-		if ( NULL === $tpl_name || NULL === $tpl_dir )
+		if ( NULL === $tpl_name )
 		{
 			$request = Dispatcher::getInstance()->getRequest();
 
-			if ( NULL === $tpl_dir )
-			{
-				$tpl_dir = strtolower($request->controller);
-
-			}
-
-			if ( NULL === $tpl_name )
-			{
-				$tpl_name = strtolower($request->action);
-			}
+			$tpl_name = strtolower($request->controller . DS . $request->action);
 		}
 
 		$tpl_name = $tpl_root_dir . DS . $tpl_dir . DS . 'views' . DS . $tpl_name . '.html';
 
-		echo $this->_view->display($tpl_name);
+		echo $this->_view->fetch($tpl_name);
 	}
 
 	public function assign($spec, $value = NULL) {
@@ -126,23 +117,37 @@ class Smarty_Adapter extends View {
 		return $this;
 	}
 
-	public function render($file_name, $tpl_vars = array(), $tpl_root_dir = NULL) {
+	public function render($tpl_name = NULL, $tpl_vars = NULL) {
+			
+		$tpl_root_dir = $this->setScriptPath()->getScriptPath();
 		
-		// 根目录
-		if ( NULL === $tpl_root_dir )
-			$tpl_root_dir = $this->setScriptPath()->getScriptPath();
+		if ( NULL === $tpl_name )
+		{
+			$request = Dispatcher::getInstance()->getRequest();
 
-		$file_name = $tpl_root_dir . DS . $file_name;
+			if ( NULL === $tpl_dir )
+			{
+				$tpl_dir = strtolower($request->controller);
+			}
 
-		if (!empty($tpl_vars))
+			if ( NULL === $tpl_name )
+			{
+				$tpl_name = strtolower($request->action);
+			}
+		}	
+
+		if ( NULL !== $tpl_vars )
 		{
 			$this->assign($tpl_vars);
 		}
 
-		return $this->_view->fetch($file_name);
+		$tpl_name = $tpl_root_dir . DS . 'views' . DS . $tpl_name;
+
+		return $this->_view->fetch($tpl_name);
 	}
 
 	public function registerFunction($type, $function, $params) {
+		
 		if (!in_array($type, array('function', 'modifier')))
 			return false;
 		$this->_view->registerPlugin($type, $function, $params);

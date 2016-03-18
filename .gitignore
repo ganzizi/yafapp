@@ -1,0 +1,5 @@
+cache/
+logs/
+.snv
+*.DS_Store
+public/uploads

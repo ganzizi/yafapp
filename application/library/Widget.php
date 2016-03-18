@@ -21,10 +21,10 @@ class Widget {
 
         if ( ! isset(Widget::$_instance[$class_name]) )
         {
-
-            Core::loader('widget', 'classes' . DS . $class_name);
+            Core::loader('widgets', 'classes' . DS . $class_name);
 
             $_class_name = 'Widget\\' . $class_name;
+
             Widget::$_instance[$class_name] = new $_class_name;
         }
 
@@ -36,23 +36,6 @@ class Widget {
             ':class'  => get_class($this),
             ':method' => $method
         ), E_USER_ERROR);
-    }
-
-    public function args($key, $value = NULL) {
-
-        if ( is_array($key) )
-        {
-            foreach ($key as $_key => $_value) {
-
-                $this->_args[$_key] = $_value;
-            }
-        }
-        else
-        {
-            $this->_args[$key] = $value;
-        }
-
-        return $this;
     }
 
     /**
@@ -91,7 +74,7 @@ class Widget {
         
         $tpl_file = $tpl_dir . DS . $tpl_file;
 
-        Output::factory('Smarty')->display($tpl_file, 'widget');
+        Output::factory('Smarty')->assign($this->_assign)->display($tpl_file, 'widgets');
     }
 
     /**
@@ -103,17 +86,18 @@ class Widget {
      */
     public function assign($key, $value = NULL)
     {
-        $data = array();
-        if (is_array($key)) {
-            foreach ($key as $k => $value) {
-                $data[$k] = $value;
+        if ( is_array($key) )
+        {
+            foreach ($key as $_key => $_value) {
+
+                $this->_assign[$_key] = $_value;
             }
-        } else {
-            $data = array(
-                $key => $value
-            );
         }
-        
-        $this->_assign = array_merge($this->_assign, $data);
+        else
+        {
+            $this->_assign[$key] = $value;
+        }
+
+        return $this;
     }
 }

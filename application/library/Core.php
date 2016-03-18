@@ -40,17 +40,14 @@ class Core {
         return new $class_name($args);
     }
 
-    public static function loader($dir, $file, $ext = NULL, $return = FALSE) {
+    public static function loader($dir, $file, $ext = NULL) {
 
-        $find_file = Core::findFile($dir, $file, $ext);
-
-        if ( ! $find_file )
+        if ( false === ( $find_file = Core::findFile($dir, $file, $ext) ) )
         {
-            die("not find");
+            throw new Core_Exception("Loaded file you not found :file ", array(':file' => $find_file));
         }
 
-        if ( FALSE === $return )
-            return Loader::import($find_file);
+        Loader::import($find_file);
 
     }
 
