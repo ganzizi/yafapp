@@ -336,16 +336,9 @@ class Core {
             else
             {
 
-                // not find dir
-                echo $path;
-
-                die("\n");
-
-                // // This module is invalid, remove it
-                // throw new Core_ExcCoreion('Attempted to load an invalid or missing module \':module\' at \':path\'', array(
-                //     ':module' => $name,
-                //     ':path'   => Debug::path($path),
-                // ));
+                throw new Core_Exception("config for application.modules :module does not exist", array(
+                        ':module' => $path
+                ));
             }
         }
 

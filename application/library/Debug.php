@@ -248,9 +248,9 @@ class Debug {
      */
     public static function path($file)
     {
-        if (strpos($file, APPPATH) === 0)
+        if (strpos($file, ROOT_PATH) === 0)
         {
-            $file = 'APPPATH'.DIRECTORY_SEPARATOR.substr($file, strlen(APPPATH));
+            $file = 'ROOT_PATH'.DIRECTORY_SEPARATOR.substr($file, strlen(ROOT_PATH));
         }
         elseif (strpos($file, SYSPATH) === 0)
         {

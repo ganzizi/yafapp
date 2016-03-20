@@ -84,7 +84,7 @@ class Core_Exception extends Exception {
      */
     public function __toString()
     {
-        return Ept_Exception::text($this);
+        return Core_Exception::text($this);
     }
 
     /**
