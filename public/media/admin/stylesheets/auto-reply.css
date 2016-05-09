@@ -1,0 +1,123 @@
+.reply-box ol {
+    list-style: none;
+}
+
+.reply-box ol li {
+    line-height: 38px;
+    float: left;
+    width: 160px;
+    text-align: center;
+}
+
+.clear {
+    clear: both;
+    padding-top: 20px;
+}
+
+/* 关键词悬停 */
+.keyword-box li {
+    border: 1px #ccc dashed;
+    position: relative;
+    float: left;
+    margin: 5px 10px;
+}
+
+.keyword-box li span {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    display: inline-block;
+    background: #ccc;
+    border-radius: 50%;
+    color: #fff;
+    text-align: center;
+    width: 15px;
+    height: 15px;
+    line-height: 17px;
+    font-size: 12px;
+    display: none;
+}
+
+.keyword-box span a {
+    color: red
+}
+
+.form-group {
+    padding-left: 8px;
+}
+
+.required {
+    color: red
+}
+
+.content-expression .emotion-container {
+    position: relative;
+    width: 351px;
+    height: 186px;
+    background: #fff;
+    padding-left: 1px;
+    padding-top: 1px;
+}
+
+.content-expression .emotion-container>li {
+    cursor: pointer;
+    float: left;
+    border: 1px solid #e8e8e8;
+    height: 28px;
+    width: 26px;
+    overflow: hidden;
+    margin: -1px 0 0 -1px;
+    padding: 4px 2px;
+    text-align: center;
+    line-height: 18px;
+}
+
+.content-expression .emotion-container img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    vertical-align: middle;
+    border: 0;
+}
+
+/* 插入 */
+.input-group {
+    padding: 10px;
+    width: 280px;
+}
+
+/* 关键词 表单弹出层 */
+.keyword-btn {
+    line-height: 30px;
+    text-align: right;
+}
+
+.keyword-form {
+    width: 263px;
+}
+
+#modal-body{
+    height: 99px;
+}
+
+.keyword-form .modal-body {
+    padding: 8px;
+}
+
+/*分页*/
+.auto-reply-pager .panel-footer {
+    background: none;
+}
+
+/*内容导航选中样式*/
+.content-nav .active {
+    color: #408407;
+}
+
+.list-content {
+    padding-right: 8px;
+}
+
+.nav-tabs-xs {
+    margin-bottom: 10px;
+}

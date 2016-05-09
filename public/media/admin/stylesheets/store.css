@@ -1,0 +1,107 @@
+/* 导航和二级菜单处理 */
+/*.page-header{ border-bottom: none; padding-bottom: 0; margin-top: -30px;}
+.page-header .nav {  margin-bottom: 5px; }
+*/
+.content-box { margin-top: 0px;}
+
+.nav-box {height: 50px; 
+}
+.nav-box .nav-title { font-size: 16px; line-height: 50px; font-family: "Monaco"
+font-style: normal; color: #554}
+
+.nav-box .pull-right { line-height: 50px;}
+.modal .module_nav {
+    padding-top: 5px;
+}
+.module_nav {
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: baseline;
+    font-size: 0;
+    line-height: 0;
+    font-weight: bold;
+}
+
+.module_nav > li {
+    display: inline-block;
+    margin-right: 5px;
+    font-size: 12px;
+    line-height: 18px;
+}
+
+.model_active {
+    color: #555;
+}
+
+*{ margin: 0;padding: 0; border: 0; }
+
+/* 上传图片悬停显示删除按钮 */
+.cfl{ zoom:1; }
+.cfl:after{ content:'';display: block;clear:both; }
+.upload_img p{ position: relative; float: left; margin: 5px 10px; }
+.upload_img p img{ border: 1px #ccc solid; }
+.upload_img p span{ position: absolute; top: -5px; right: -5px; display: inline-block; background: #ccc; border-radius: 50%; color: #fff; text-align: center; width: 15px; height: 15px; line-height: 17px; font-size: 12px; display: none; }
+.upload_img p span a { color: red }
+
+/* 日期+时间空间样式微调 */
+.start-time, .end-time { float: left; width: 48%; margin-right: 3px;}
+.datepicker-split { float: left; height: 32px; margin-left: 5px;}
+.datepicker-time { margin-left: 5px;}
+
+/* 遮罩层样式 */
+.body-mask {
+    position:fixed; top: 0px; right:0px; bottom:0px;filter: alpha(opacity=60); background-color: #777;
+    z-index: 1002; left: 0px; display:none;
+    opacity:0.2; -moz-opacity:0.2;
+}
+
+/* form 表单 footer 样式 */
+.load-page-footer {
+    padding-top: 10px;
+    margin-top: 10px;
+    padding-right: 20px;
+    border-top: 1px solid #e5e5e5;
+}
+
+/* uri 样式部分 */
+.uri-body { 
+    padding-top: 10px;
+}
+/* 居中 */
+.t-center{ text-align: center; }
+
+/* ajax loading 样式*/
+#progressBar{ position: absolute; left:240px; top:46px; width: 0; height: 2px; background: #0D96F0;  }
+
+.upload_img img { max-width: 200px; max-height: 150px;}
+
+/* 默认隐藏主题设置 */
+#demo-settings { display: none;}
+
+/* 搜索框样式 */
+.form-search{ height: 29px; text-align: right; }
+.form-search div{ display: inline-block; }
+
+/* 二级菜单 隐藏 border -top */
+.two-menu-no-border-top {
+    border-top: none;
+}
+
+.dropdown-menu-min { min-width: 20px;}
+
+.layout-box, .layout-content{ min-height: 300px;}
+
+#content-wrapper { padding-bottom: 50px;}
+
+/*layout-loading*/
+#layout-loading {
+    text-align:center; height:31px; padding-top: 30px;
+}
+
+.float-right { float: right;}
+
+
+.administer-nav { position:fixed; right: 0px; width: 200px;     left: 10px;
+    z-index: 999; bottom: 10px; }
+
+.administer-nav select { height: 220px; background-color: #CCCCCC; border-radius: 10px; }
