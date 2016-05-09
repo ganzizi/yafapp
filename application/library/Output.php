@@ -5,7 +5,6 @@
  * @author jacky<isme.jac@gmail.com>
  * @copyright Copyright (c) 2916 (http://www.elephant.net)
  */
-
 use Yaf\Registry;
 use Yaf\Dispatcher;
 use Yaf\Response\Http;

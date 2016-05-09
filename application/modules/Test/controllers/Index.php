@@ -12,7 +12,6 @@ class IndexController extends Controller_Core {
     public function indexAction() {
         
 
-        die("!212");
 
     }
    

@@ -7,7 +7,7 @@
  * @copyright  (c) 2015-2016 Elephant Team
  * @license    http://elephant.software/license
  */
-class Url extends Ept_URL{
+class URL{
 
     /**
      * URL 的基本路径

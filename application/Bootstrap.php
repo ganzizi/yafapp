@@ -13,14 +13,11 @@ use Yaf\Loader;
 
 class Bootstrap extends Bootstrap_Abstract{
     
-
     public function _initConfig() {
-
 
         $config = Application::app()->getConfig();
         Registry::set('config', $config);
     
-
         if ( ! function_exists('__'))
         {
            
@@ -45,7 +42,6 @@ class Bootstrap extends Bootstrap_Abstract{
     }
 
     public function _initView(Dispatcher $dispatcher) {
-        
 
         // print_r($dispatcher);
 

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<!--[if IE 8]>         <html class="ie8"> <![endif]-->
+<!--[if IE 9]>         <html class="ie9 gt-ie8"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="gt-ie8 gt-ie9 not-ie"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>登陆管理平台</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+    <link href="{URL::media("admin/stylesheets/bootstrap.min.css")}" rel="stylesheet" type="text/css">
+    <link href="{URL::media("admin/stylesheets/pixel-admin.min.css")}" rel="stylesheet" type="text/css">
+    <link href="{URL::media("admin/stylesheets/pages.min.css")}" rel="stylesheet" type="text/css">
+    <link href="{URL::media("admin/stylesheets/rtl.min.css")}" rel="stylesheet" type="text/css">
+    <link href="{URL::media("admin/stylesheets/themes.min.css")}" rel="stylesheet" type="text/css">
+
+    <!--[if lt IE 9]>
+        <script src="{URL::media("admin/javascripts/ie.min.js")}"></script>
+    <![endif]-->
+
+</head>
+
+<body class="theme-default page-signin-alt">
+<!-- Demo script --> <script src="{URL::media("admin/demo/demo.js")}"></script> <!-- / Demo script -->
+
+
+
+<!-- 2. $MAIN_NAVIGATION ===========================================================================
+
+    Main navigation
+-->
+    <div class="signin-header">
+        <a href="index.html" class="logo">
+            <div class="demo-logo bg-primary"></div>&nbsp;
+            <strong>Yafapp Admin</strong>
+        </a> <!-- / .logo -->
+        <a href="pages-signup-alt.html" class="btn btn-primary">注册</a>
+    </div> <!-- / .header -->
+
+    <h1 class="form-header">登陆你的账号</h1>
+
+
+    <!-- Form -->
+    <form action="index.html" id="signin-form_id" class="panel">
+        <div class="form-group">
+            <input type="text" name="signin_username" id="username_id" class="form-control input-lg" placeholder="用户名/手机号/邮箱">
+        </div> <!-- / Username -->
+
+        <div class="form-group signin-password">
+            <input type="password" name="signin_password" id="password_id" class="form-control input-lg" placeholder="密码">
+            <a href="#" class="forgot">忘记密码?</a>
+        </div> <!-- / Password -->
+
+        <div class="form-actions">
+            <input type="submit" value="登陆" class="btn btn-primary btn-block btn-lg">
+        </div> <!-- / .form-actions -->
+    </form>
+    <!-- / Form -->
+<!-- 
+    <div class="signin-with">
+        <div class="header">or sign in with</div>
+        <a href="index.html" class="btn btn-lg btn-facebook rounded"><i class="fa fa-facebook"></i></a>&nbsp;&nbsp;
+        <a href="index.html" class="btn btn-lg btn-info rounded"><i class="fa fa-twitter"></i></a>&nbsp;&nbsp;
+        <a href="index.html" class="btn btn-lg btn-danger rounded"><i class="fa fa-google-plus"></i></a>
+    </div> -->
+
+
+<!-- Get jQuery from Google CDN -->
+<!--[if !IE]> -->
+    <script type="text/javascript"> window.jQuery || document.write('<script src="assets/javascripts/jquery.2.03.min.js">'+"<"+"/script>"); </script>
+<!-- <![endif]-->
+<!--[if lte IE 9]>
+    <script type="text/javascript"> window.jQuery || document.write('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js">'+"<"+"/script>"); </script>
+<![endif]-->
+
+
+<!-- Pixel Admin's javascripts -->
+<script src="assets/javascripts/bootstrap.min.js"></script>
+<script src="assets/javascripts/pixel-admin.min.js"></script>
+
+<script type="text/javascript">
+    window.PixelAdmin.start([
+        function () {
+            $("#signin-form_id").validate({ focusInvalid: true, errorPlacement: function () { } });
+            
+            // Validate username
+            $("#username_id").rules("add", { 
+                required: true,
+                minlength: 3
+            });
+
+            // Validate password
+            $("#password_id").rules("add", { 
+                required: true,
+                minlength: 6
+            });
+        }
+    ]);
+</script>
+
+</body>
+</html>

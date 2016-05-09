@@ -48,7 +48,6 @@ class Core {
         }
 
         Loader::import($find_file);
-
     }
 
     /**
