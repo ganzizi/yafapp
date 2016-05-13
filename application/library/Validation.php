@@ -1,12 +1,15 @@
 <?php
-/*
- * Validation From Kohana
+/**
+ * Validation
  *
- * @package    Elephant
- * @author     Jacky
- * @copyright  (c) 2015-2016 Elephant Team
- * @license    http://elephant.software/license
+ * @package    Kohana
+ * @category   Helpers
+ * @author     Kohana Team
+ * @copyright  (c) 2007-2012 Kohana Team
+ * @license    http://kohanaframework.org/license
  */
+use Yaf\Application;
+
 class Validation implements ArrayAccess {
 
     /**
@@ -54,14 +57,14 @@ class Validation implements ArrayAccess {
      * Throws an exception because Validation is read-only.
      * Implements ArrayAccess method.
      *
-     * @throws  Kohana_Exception
+     * @throws  Core_Exception
      * @param   string   $offset    key to set
      * @param   mixed    $value     value to set
      * @return  void
      */
     public function offsetSet($offset, $value)
     {
-        throw new Kohana_Exception('Validation objects are read-only.');
+        throw new Core_Exception('Validation objects are read-only.');
     }
 
     /**
@@ -80,13 +83,13 @@ class Validation implements ArrayAccess {
      * Throws an exception because Validation is read-only.
      * Implements ArrayAccess method.
      *
-     * @throws  Kohana_Exception
+     * @throws  Core_Exception
      * @param   string  $offset key to unset
      * @return  void
      */
     public function offsetUnset($offset)
     {
-        throw new Kohana_Exception('Validation objects are read-only.');
+        throw new Core_Exception('Validation objects are read-only.');
     }
 
     /**
@@ -169,6 +172,12 @@ class Validation implements ArrayAccess {
         $this->_labels = $labels + $this->_labels;
 
         return $this;
+    }
+
+    public function current() {
+
+        return current($this->errors());
+
     }
 
     /**
@@ -285,7 +294,7 @@ class Validation implements ArrayAccess {
      */
     public function check()
     {
-        if (Ept::$profiling === TRUE)
+        if (Core::$profiling === TRUE)
         {
             // Start a new benchmark
             $benchmark = Profiler::start('Validation', __FUNCTION__);
@@ -476,7 +485,7 @@ class Validation implements ArrayAccess {
      * @param   mixed   $translate  translate the message
      * @return  array
      */
-    public function errors($file = NULL, $translate = TRUE)
+    public function errors($file = 'default', $translate = TRUE)
     {
         if ($file === NULL)
         {
@@ -561,27 +570,7 @@ class Validation implements ArrayAccess {
                 }
             }
 
-            if ($message = Ept::message($file, "{$field}.{$error}") AND is_string($message))
-            {
-                // Found a message for this field and error
-            }
-            elseif ($message = Ept::message($file, "{$field}.default") AND is_string($message))
-            {
-                // Found a default message for this field
-            }
-            elseif ($message = Ept::message($file, $error) AND is_string($message))
-            {
-                // Found a default message for this error
-            }
-            elseif ($message = Ept::message('validation', $error) AND is_string($message))
-            {
-                // Found a default message for this error
-            }
-            else
-            {
-                // No message exists, display the path expected
-                $message = "{$file}.{$field}.{$error}";
-            }
+            $message = $application = Application::app()->getConfig()->validation->{$file}->{$error};
 
             if ($translate)
             {

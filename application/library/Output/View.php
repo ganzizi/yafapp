@@ -29,14 +29,14 @@ class View implements View_Interface {
     /**
      * 模板的根目录
      * 
-     * @var null
+     * @var NULL
      */
     protected $_tpl_root_dir;
 
     /**
      * 模板变量
      * 
-     * @var null
+     * @var NULL
      */
     protected $_tpl_vars = array();
 
@@ -47,21 +47,21 @@ class View implements View_Interface {
      */
     protected $_tpl_type = 'Yaf_View_Simple';
 
-    public function __construct($tpl_dir = null, array $tpl_config = array()) {
+    public function __construct($tpl_dir = NULL, array $tpl_config = array()) {
 
         $this->_instance($tpl_dir, $tpl_config);
     }
     
-    protected function _instance($tpl_dir = null, array $tpl_config = array()) {
+    protected function _instance($tpl_dir = NULL, array $tpl_config = array()) {
         
         $this->_tpl_root_dir = $tpl_config['template_dir'];
     }
     
     public function display($name, $tpl_vars = array()) { }
 
-    public function assign($spec, $value = null) { }
+    public function assign($spec, $value = NULL) { }
 
-    public function render($name, $tpl_vars = null) {
+    public function render($name, $tpl_vars = NULL) {
 
         if ( ! $this->_tpl_dir )
         {
@@ -83,7 +83,7 @@ class View implements View_Interface {
 
             if ( $request->module == 'Index' )
             {
-                $tpl_dir = 'views';
+                $tpl_dir = '';
             }
             else
             {
@@ -98,6 +98,7 @@ class View implements View_Interface {
         else
         {
             $this->_tpl_dir = rtrim($this->_tpl_root_dir . DS . $tpl_dir, DS) ;
+
 
             if ( ! is_readable($this->_tpl_dir) )
             {

@@ -6,15 +6,9 @@
  * @copyright Copyright (c) 2916 (http://www.elephant.net)
  */
 namespace Output;
-
 class Xml extends \Output{
 
-    public function render($errcode = 0, $msg = 'ok') {
-
-        $this->assign(array(
-            'errcode' => $errcode,
-            'msg'     => $msg
-        ));
+    public function render() {
 
         $this->setHeader('Content-Type', 'application/xml; charset=utf8');
 
@@ -23,9 +17,8 @@ class Xml extends \Output{
         return $this->setBody($xml);
     }
 
-    public function display($errcode = 0, $msg = 'ok') {
-        
-        $this->render($errcode, $msg)->response();
+    public function display() {
+        $this->render()->response();
         die();
     }
 }

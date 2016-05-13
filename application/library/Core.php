@@ -7,6 +7,7 @@
  */
 
 use Yaf\Loader;
+use Yaf\Application;
 
 class Core {
 
@@ -19,7 +20,7 @@ class Core {
 
 
     /**
-     * @var  boolean  Whether to use internal caching for [Kohana::findFile], does not apply to [Kohana::cache]. Set by [Kohana::init]
+     * @var  boolean  Whether to use internal caching for [Kohana::find_file], does not apply to [Kohana::cache]. Set by [Kohana::init]
      */
     public static $caching = FALSE;
 
@@ -42,7 +43,7 @@ class Core {
 
     public static function loader($dir, $file, $ext = NULL) {
 
-        if ( false === ( $find_file = Core::findFile($dir, $file, $ext) ) )
+        if ( false === ( $find_file = Core::find_file($dir, $file, $ext) ) )
         {
             throw new Core_Exception("Loaded file you not found :file ", array(':file' => $find_file));
         }
@@ -148,13 +149,13 @@ class Core {
      * `index.php`) will be used.
      *
      *     // Returns an absolute path to views/template.php
-     *     Kohana::findFile('views', 'template');
+     *     Kohana::find_file('views', 'template');
      *
      *     // Returns an absolute path to media/css/style.css
-     *     Kohana::findFile('media', 'css/style', 'css');
+     *     Kohana::find_file('media', 'css/style', 'css');
      *
      *     // Returns an array of all the "mimes" configuration files
-     *     Kohana::findFile('config', 'mimes');
+     *     Kohana::find_file('config', 'mimes');
      *
      * @param   string  $dir    directory name (views, i18n, classes, extensions, etc.)
      * @param   string  $file   filename with subdirectory
@@ -163,7 +164,7 @@ class Core {
      * @return  array   a list of files when $array is TRUE
      * @return  string  single file path
      */
-    public static function findFile($dir, $file, $ext = NULL, $array = FALSE)
+    public static function find_file($dir, $file, $ext = NULL, $array = FALSE)
     {
         $dir = str_replace('/', DS, $dir);
 
@@ -251,55 +252,6 @@ class Core {
         }
 
         return $found;
-    }
-
-
-    /**
-     * Get a message from a file. Messages are arbitrary strings that are stored
-     * in the `messages/` directory and reference by a key. Translation is not
-     * performed on the returned values.  See [message files](kohana/files/messages)
-     * for more information.
-     *
-     *     // Get "username" from messages/text.php
-     *     $username = Kohana::message('text', 'username');
-     *
-     * @param   string  $file       file name
-     * @param   string  $path       key path to get
-     * @param   mixed   $default    default value if the path does not exist
-     * @return  string  message string for the given path
-     * @return  array   complete message list, when no path is specified
-     * @uses    Arr::merge
-     * @uses    Arr::path
-     */
-    public static function message($file, $path = NULL, $default = NULL)
-    {
-        static $messages;
-        
-        if ( ! isset($messages[$file]))
-        {
-            // Create a new message list
-            $messages[$file] = array();
-
-            if ($files = Core::findFile('Messages', $file))
-            {
-                foreach ($files as $f)
-                {
-                    // Combine all the messages recursively
-                    $messages[$file] = Arr::merge($messages[$file], include($f));
-                }
-            }
-        }
-    
-        if ($path === NULL)
-        {
-            // Return all of the messages
-            return $messages[$file];
-        }
-        else
-        {
-            // Get a message using the path
-            return Arr::path($messages[$file], $path, $default);
-        }
     }
 
     /**

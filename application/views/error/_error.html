@@ -1,0 +1,78 @@
+// 普通提示
+
+// 开发者提示
+
+// 异常错误提示
+
+
+<style type="text/css">
+#elephant_error { background: #ddd; font-size: 1em; font-family:sans-serif; text-align: left; color: #111; }
+#elephant_error h1,
+#elephant_error h2 { margin: 0; padding: 1em; font-size: 1em; font-weight: normal; background: #911; color: #fff; }
+    #elephant_error h1 a,
+    #elephant_error h2 a { color: #fff; }
+#elephant_error h2 { background: #222; }
+#elephant_error h3 { margin: 0; padding: 0.4em 0 0; font-size: 1em; font-weight: normal; }
+#elephant_error p { margin: 0; padding: 0.2em 0; }
+#elephant_error a { color: #1b323b; }
+#elephant_error pre { overflow: auto; white-space: pre-wrap; }
+#elephant_error table { width: 100%; display: block; margin: 0 0 0.4em; padding: 0; border-collapse: collapse; background: #fff; }
+    #elephant_error table td { border: solid 1px #ddd; text-align: left; vertical-align: top; padding: 0.4em; }
+#elephant_error div.content { padding: 0.4em 1em 1em; overflow: hidden; }
+#elephant_error pre.source { margin: 0 0 1em; padding: 0.4em; background: #fff; border: dotted 1px #b7c680; line-height: 1.2em; }
+    #elephant_error pre.source span.line { display: block; }
+    #elephant_error pre.source span.highlight { background: #f0eb96; }
+        #elephant_error pre.source span.line span.number { color: #666; }
+#elephant_error ol.trace { display: block; margin: 0 0 0 2em; padding: 0; list-style: decimal; }
+    #elephant_error ol.trace li { margin: 0; padding: 0; }
+.js .collapsed { display: block; }
+</style>
+<script type="text/javascript">
+document.documentElement.className = document.documentElement.className + ' js';
+function koggle(elem)
+{
+    elem = document.getElementById(elem);
+
+    if (elem.style && elem.style['display'])
+        // Only works with the "style" attr
+        var disp = elem.style['display'];
+    else if (elem.currentStyle)
+        // For MSIE, naturally
+        var disp = elem.currentStyle['display'];
+    else if (window.getComputedStyle)
+        // For most other browsers
+        var disp = document.defaultView.getComputedStyle(elem, null).getPropertyValue('display');
+
+    // Toggle the state of the "display" style
+    elem.style.display = disp == 'block' ? 'none' : 'block';
+    return false;
+}
+</script>
+<div id="elephant_error">
+    <h1><span class="type">{$exception->getFile()}: [ {$exception->getCode()} ]</span> <span class="message">{$exception->getMessage()}</span></h1>
+    <div id="" class="content">
+        <p><span class="file">
+
+            {foreach $exception->getTrace() as $name => $arg}
+            <li>
+                <p>
+                    <span class="file">
+                        <a href="#" onclick="">{$arg['file']} [{$arg['line']}]</a>
+                    </span>
+                    &raquo;
+                   ({$arg['class']}: <a href="#">{$arg['function']}</a>)
+                </p>
+                
+                <div class="collapsed" style="display:none">
+                    <table cellspacing="0">
+                        <tr>
+                            <td><code>{$name}</code></td>
+                            <td><pre>{print_r($arg)}</pre></td>
+                        </tr>
+                    </table>
+                </div>
+            </li>
+        {/foreach}
+        </ol>
+    </div>
+</div>

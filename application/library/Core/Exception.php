@@ -84,6 +84,7 @@ class Core_Exception extends Exception {
      */
     public function __toString()
     {
+        die("11211");
         return Core_Exception::text($this);
     }
 
@@ -118,6 +119,8 @@ class Core_Exception extends Exception {
      */
     public static function _handler(Exception $e)
     {
+
+        die("11211");
         try
         {
             // Log the exception
@@ -155,7 +158,9 @@ class Core_Exception extends Exception {
      * @return  void
      */
     public static function log(Exception $e, $level = Log::EMERGENCY)
-    {
+    {   
+
+        die("11211");
         if (is_object(Kohana::$log))
         {
             // Create a text version of the exception
@@ -179,6 +184,8 @@ class Core_Exception extends Exception {
      */
     public static function text(Exception $e)
     {
+
+        die("1121");
         return sprintf('%s [ %s ]: %s ~ %s [ %d ]',
             get_class($e), $e->getCode(), strip_tags($e->getMessage()), Debug::path($e->getFile()), $e->getLine());
     }
@@ -192,6 +199,8 @@ class Core_Exception extends Exception {
      */
     public static function response(Exception $e)
     {
+
+        die("456 ");
         try
         {
             // Get the exception information

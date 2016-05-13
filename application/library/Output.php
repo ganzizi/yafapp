@@ -19,7 +19,7 @@ class Output extends Http {
     protected $_vars = NULL;
 
     public static function factory($output_type = NULL, $tpl_dir = NULL, array $tpl_config = array()) {
-
+        
         if ( NUll === $output_type )
         {
             $request = Dispatcher::getInstance()
@@ -33,23 +33,23 @@ class Output extends Http {
 
         if ( ! isset( Output::$_initialize[$output_type] ) )
         {
-
             if ( count($tpl_config) == 0 )
             {
                 $tpl_config = Registry::get("config")->get("view")->toArray();
             }
             
-            if ( $output_type == 'Smarty' )
+            if ( $output_type == 'Smarty' || $output_type == 'View')
             {
                 $initialize = new Smarty_Adapter($tpl_dir, $tpl_config);
             }
             else
             {
                 $class = '\Output\\' . $output_type;
-                $initialize = new $class;
+                $initialize = new $class($tpl_dir, $tpl_config);
             }
+
+            $s = Output::$_initialize[$output_type] = $initialize;
             
-            Output::$_initialize[$output_type] = $initialize;
         }
 
         return Output::$_initialize[$output_type];

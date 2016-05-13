@@ -8,15 +8,16 @@
 namespace Core;
 
 use Yaf\Controller_Abstract;
+use Yaf\Application;
 
 class Controller_Core extends Controller_Abstract {
 
     /**
      * output type
      * 
-     * @var string text/html|json|xml
+     * @var string View|Json|Xml
      */
-    protected $_output_type = null;
+    protected $_output_type = NULL;
 
     /**
      * init
@@ -59,67 +60,56 @@ class Controller_Core extends Controller_Abstract {
     /**
      * failure
      *
-     * @param  string        $result    错误信息
+     * @param  string        $msg    错误信息
      * @param  array|string  $attribute 附加信息
      * @return mix
      */
-    public function failure($result = null, array $attribute = null, $output_type = null)
+    public function failure($msg, $title = NULL, $output_type = NULL)
     {
-        echo $this->output($result, $attribute, 1, $output_type);
+        echo $this->tips($msg, $title, 1, $output_type);
         exit();
     }
 
     /**
      * succeed
      * 
-     * @param  string $result       返回信息
+     * @param  string $msg       返回信息
      * @param  array  $response     附加信息
      * @param  string $output_type  输出类型
      * @return void
      */
-    public function succeed($result = null, array $attribute = null, $output_type = null) {
+    public function succeed($msg = NULL, $attribute = NULL, $output_type = NULL) {
         
-        echo $this->output($result, $attribute, 0, $output_type);
+        echo $this->output($msg, $attribute, 0, $output_type);
         exit();
     }
 
-    public function processed($result, array $attribute = null, $output_type = null) {
-        
-        $result = (boolean) $result;
-
-        if ( $result )
-            $this->succeed($result, $attribute, $output_type);
-        else
-            $this->failure($result, $attribute, $output_type);
-
-    }
-
     /**
-     * 信息提示与输出
+     * 操作提示与输出
+     *
+     * $this->tips('姓名不能为空', '')
      * 
-     * @param  array      $result      处理结果
-     * @param  array|null $attribute   附加数据
+     * @param  array      $msg         处理结果
+     * @param  array|NULL $attribute   附加数据
      * @param  boolean    $redirect    跳转
      * @param  string     $output_type 输出类型
      * @return string
      */
-        
-    public function output($result = null, $attribute = null, $errcode = 1, $output_type = null) {
+    public function tips($msg = NULL, $title = NULL, $errcode = 0, $output_type = NULL) {
 
         // Output type
         if ( ! $output_type )
         {
-
             // Output type
             if ( ! $this->_output_type )
             {
                 if ( $this->getRequest()->isXmlHttpRequest() )
                 {
-                    $output_type = 'json';
+                    $output_type = 'Json';
                 }
                 else
                 {
-                    $output_type = 'text/html';
+                    $output_type = 'Smarty';
                 }
             }
             else
@@ -134,40 +124,16 @@ class Controller_Core extends Controller_Abstract {
             'errcode' => $errcode
         );
 
-        if ( $result )
-            $assign['result'] = $result;      
+        if ( $msg )
+            $assign['msg'] = $msg;      
 
-        if ( $attribute )
-            $assign['attribute'] = $attribute;
+        if ( $title )
+            $assign['title'] = $title;
         // -----------------------------------
 
-        // header
-        $response = $this->getResponse();
-        
-        $response->setHeader('Content-Type', 'text/html; charset=utf8');
-
-        // output format
-        if ( "json" == $output_type )
-        {
-            $response->setBody(Json::encode($assign))->response();
-        }
-        else if ( "xml" == $output_type )
-        {
-            die("<h1>待开发...</h1>");
-        }
-        else
-        {
-            if ( isset($attribute['redirect']) )
-            {
-                $this->redirect($attribute['redirect']);
-            }
-            else
-            {
-                $this->_view->assign($assign);
-
-                $response->setBody($output)->response();
-            }
-        }
+        \Output::factory($output_type)
+            ->assign($assign)
+            ->display('error/error', NULL, Application::app()->getConfig()->view->template_dir);
     }
 
     public function __get($name) {

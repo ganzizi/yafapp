@@ -73,6 +73,7 @@ class Smarty_Adapter extends View {
 	}
 
 	public function cleanCache($name) {
+
 		if (!empty($name))
 		{
 			$this->_view->clearCache($name);
@@ -83,6 +84,7 @@ class Smarty_Adapter extends View {
 			$this->_view->clearAllCache();
 			$this->_view->clearCompiledTemplate();
 		}
+		
 	}
 
 	public function display($tpl_name = NULL, $tpl_dir = NULL, $tpl_root_dir = NULL) {
@@ -91,7 +93,7 @@ class Smarty_Adapter extends View {
 		{
 			$tpl_root_dir = $this->setScriptPath()->getScriptPath();
 		}
-		
+
 		if ( NULL === $tpl_name )
 		{
 			$request = Dispatcher::getInstance()->getRequest();
