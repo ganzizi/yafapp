@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>登陆管理平台</title>
+    <title>登录-Yafapp</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
     <link href="{URL::media("admin/stylesheets/bootstrap.min.css")}" rel="stylesheet" type="text/css">
@@ -46,7 +46,7 @@
 
         <div class="form-group" style="margin-top: 20px;margin-bottom: 20px;">
             <label class="checkbox-inline">
-                <input type="checkbox" name="signup_confirm" class="px">
+                <input type="checkbox" name="signup_confirm" value="1" class="px">
                 <span class="lbl">我同意相关服务条款 <a href="#" target="_blank">相关条款</a></span>
             </label>
         </div>
@@ -56,12 +56,12 @@
         </div>
     </form>
 
-    <div class="signin-with">
+<!--     <div class="signin-with">
         <div class="header">平台登录</div>
         <a href="#" class="btn btn-lg rounded"><i class="fa fa-github"></i></a>&nbsp;&nbsp;
         <a href="#" class="btn btn-lg rounded"><i class="fa fa-weibo"></i></a>&nbsp;&nbsp;
         <a href="#" class="btn btn-lg rounded"><i class="fa fa-linkedin"></i></a>
-    </div>
+    </div> -->
 
 <!-- Get jQuery from Google CDN -->
 <!--[if !IE]> -->
@@ -82,23 +82,22 @@
     $("form").validate({
         focusInvalid: false,
         rules: {
-            'nickname': {
-                required: true,
-                minlength: 1,
-                maxlength: 30
-            },
-            'email': {
-                required: true,
-                email : true
-            },
-            'signup_confirm': {
-                required: true,
-                email : true
-            },
-            'password': {
-                required: true,
-                minlength: 6
-            },
+            // 'nickname': {
+            //     required: true,
+            //     minlength: 2,
+            //     maxlength: 30
+            // },
+            // 'email': {
+            //     required: true,
+            //     email : true
+            // },
+            // 'password': {
+            //     required: true,
+            //     minlength: 6
+            // },
+            // 'signup_confirm': {
+            //     required: true
+            // },
         },
         submitHandler : function(form, i) {
             $(form).formSend();    
