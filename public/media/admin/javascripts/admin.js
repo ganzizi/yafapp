@@ -118,17 +118,31 @@ $.fn.formSend = function (params, options) {
             },
             success : function (xhr) {
 
+
                 if ( xhr.errcode == 1 )
                 {
-                    var output = xhr.result || "";
 
-                    if ( xhr.attribute ) 
+                    var output = "";
+
+                    if ( typeof(xhr.msg) == 'object') 
                     {
-                        for (var i = xhr.attribute.length in xhr.attribute)
+                        for (var i = xhr.msg.length in xhr.msg)
                         {
-                            output += xhr.attribute[i] + "\n";
+                            output += "<p style='text-align:center;'>" + xhr.msg[i] + "</p>";
                         }
                     }
+                    else
+                    {
+                        output += "<p style='text-align:center;'>" + xhr.msg + "</p>";
+                    }
+
+                    $.fn.dialog({
+                        title : xhr.title || "请处理以下信息",
+                        body  : output,
+                        event : 'click',
+                        size  : 'sm',
+                        footer : false
+                    });
 
                     if ( $submit instanceof $ ) $submit.button('reset');
 
@@ -144,22 +158,8 @@ $.fn.formSend = function (params, options) {
 // ---------------------------------------------------------------------
 $.fn.formSend.defaults = {
     callback : function (xhr) {
-        setTimeout(function () {
-
-            if ( ! xhr.result || ! isNaN(xhr.result) )
-            {
-                window.location.reload();
-            }
-            else if ( xhr.result.match('http://') || xhr.result.match('https://') )
-            {
-                window.location.href = xhr.result;
-            }
-            else
-            {
-                window.location.reload();
-            }
-
-        }, 500);
+        
+        alert(xhr.msg);
 
     },
     type  : 'POST'
